@@ -2,12 +2,12 @@
 
 CREATE TABLE stars (
     name VARCHAR(20) PRIMARY KEY,
-    temp INT
+    temp_kelvin FLOAT
 );
 
 CREATE TABLE planets (
     name VARCHAR(20) PRIMARY KEY,
-    orbital_period NUMERIC,
+    orbital_period_yrs NUMERIC,
     star VARCHAR(20) NOT NULL REFERENCES stars
 );
 
@@ -42,12 +42,14 @@ INSERT INTO moons (name, planet)
 
 -- name of planet, star is revolves around, number of moons
 
-SELECT planets.name, star, COUNT(moons.name) as moons_count
-    FROM planets
-        LEFT JOIN moons
-        ON planets.name = moons.planet
-    GROUP BY planets.name
-    ORDER BY planets.name ASC;
+SELECT p.name, star, COUNT(m.name) as moons_count
+    FROM planets AS p
+        LEFT JOIN moons AS m
+        ON p.name = m.planet
+    GROUP BY p.name
+    ORDER BY p.name ASC;
+
+
 
 
 
